@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+  </head>
+  <body>
+    <h1>Chores</h1>
+    <table>
+        <tr>
+            <th>SUN</th>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THU</th>
+            <th>FRI</th>
+            <th>SAT</th>
+        </tr>
+        <tr>
+            <td id="sun-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+
+            <td id="mon-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+
+            <td id="tue-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+
+            <td id="wed-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+
+            <td id="thu-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+
+            <td id="fri-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+
+            <td id="sat-chores-list">
+                <a href="{{ url_for('main.add_chore') }}">
+                    Add Chore
+                </a>
+                <a href="">Del</a>
+            </td>
+        </tr>
+    </table>
+
+    {% if chores %}
+    <ul>
+      {% for chore in chores %}
+        <li>
+          {{ chore.title }}
+          {% if chore.done %}
+            ✅
+          {% else %}
+            ❌
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No chores yet</p>
+  {% endif %}
+    
+
+    <script src="{{ url_for('static', filename='js/js.js') }}"></script>
+
+  </body>
+</html>

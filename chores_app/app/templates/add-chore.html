@@ -1,0 +1,23 @@
+
+
+{% block content %}
+  <h1>Add Chore</h1>
+
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+
+  <form method="post">
+    <input
+      type="text"
+      name="title"
+      placeholder="Chore name"
+      value="{{ title or '' }}"
+      required
+    >
+
+    <button type="submit">Add</button>
+  </form>
+
+  <a href="{{ url_for('main.home') }}">Back</a>
+{% endblock %}
