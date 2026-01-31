@@ -1,97 +1,53 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Home</title>
+{% extends "base.html" %}
 
-    <!-- CSS -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+{% block title %}Home{% endblock %}
 
-  </head>
-  <body>
-    <h1>Chores</h1>
-    <table>
-        <tr>
-            <th>SUN</th>
-            <th>MON</th>
-            <th>TUE</th>
-            <th>WED</th>
-            <th>THU</th>
-            <th>FRI</th>
-            <th>SAT</th>
-        </tr>
-        <tr>
-            <td id="sun-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
+{% block content %}
+<table>
+  <tr>
+    {% for d in days %}
+      <th class="{% if d == today %}today{% endif %}">{{ d }}</th>
+    {% endfor %}
+  </tr>
+
+  <tr>
+  {% for day in days %}
+    <td class="{% if day == today %}today-col{% endif %}" id="{{ day|lower }}-chores-list">
+     <a href="{{ url_for('main.add_chore', day=day) }}"
+      class="add-chore"
+      aria-label="Add chore">
+      +
+      </a>
+    </td>
+  {% endfor %}
+</tr>
+
+
+  <tr>
+    {% for day in days %}
+      <td class="{% if day == today %}today-col{% endif %}">
+        {% if chores_by_day.get(day) %}
+          <ul>
+            {% for chore in chores_by_day[day] %}
+              <li>
+                <form method="post"
+                      action="{{ url_for('main.toggle_chore', chore_id=chore.id) }}"
+                      style="display:inline;">
+                  <input type="checkbox"
+                         name="done"
+                         {% if chore.done %}checked{% endif %}
+                         onchange="this.form.submit()">
+                </form>
+
+                <a href="{{ url_for('main.edit_chore', chore_id=chore.id) }}">
+                  {{ chore.title }}
                 </a>
-                <a href="">Del</a>
-            </td>
-
-            <td id="mon-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
-                </a>
-                <a href="">Del</a>
-            </td>
-
-            <td id="tue-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
-                </a>
-                <a href="">Del</a>
-            </td>
-
-            <td id="wed-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
-                </a>
-                <a href="">Del</a>
-            </td>
-
-            <td id="thu-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
-                </a>
-                <a href="">Del</a>
-            </td>
-
-            <td id="fri-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
-                </a>
-                <a href="">Del</a>
-            </td>
-
-            <td id="sat-chores-list">
-                <a href="{{ url_for('main.add_chore') }}">
-                    Add Chore
-                </a>
-                <a href="">Del</a>
-            </td>
-        </tr>
-    </table>
-
-    {% if chores %}
-    <ul>
-      {% for chore in chores %}
-        <li>
-          {{ chore.title }}
-          {% if chore.done %}
-            ✅
-          {% else %}
-            ❌
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No chores yet</p>
-  {% endif %}
-    
-
-    <script src="{{ url_for('static', filename='js/js.js') }}"></script>
-
-  </body>
-</html>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </td>
+    {% endfor %}
+  </tr>
+</table>
+{% endblock %}

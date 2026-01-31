@@ -11,6 +11,7 @@
     <input
       type="text"
       name="title"
+      day="day"
       placeholder="Chore name"
       value="{{ title or '' }}"
       required
@@ -18,6 +19,7 @@
 
     <button type="submit">Add</button>
   </form>
+
 
   <a href="{{ url_for('main.home') }}">Back</a>
 {% endblock %}
